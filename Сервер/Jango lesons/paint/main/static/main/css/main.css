@@ -1,0 +1,75 @@
+aside {
+    float: left;
+    position: fixed;
+    background: #8a8a8a;
+    width: 15%;
+    padding: 2.5%;
+    height: 100vh;
+    border-right: 5px solid #4d4d4d;
+    border-bottom: solid;
+}
+
+aside img {
+    width: 80px;
+    float: left;
+    position: relative;
+    right: 20px;
+}
+
+aside .logo {
+    font-size: 40px;
+    margin-left: 10px;
+    font-weight: bold;
+    position: relative;
+    top: -72px;
+    right: -55px;
+}
+
+aside h3 {
+    margin-top: 50px;
+    font-size: 25px;
+}
+
+aside ul {list-style: none}
+aside ul li {
+    color: #000;
+    display: block;
+    margin-top: 20px;
+    transition: all .6s ease;
+}
+
+aside ul li:hover, aside ul a:hover, aside ul a:link {
+    color: #559d05;
+    text-decoration: none!important;
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    color: initial;
+}
+
+form {
+    margin-left: 32%;
+    width: 500px;
+}
+
+a.account {
+    color: #1b1b1b;
+    text-decoration: none!important;
+    cursor: pointer;
+    transform: scale(1.05);
+    margin-left: 300px;
+}
+
+a.new {
+    color: #1b1b1b;
+    text-decoration: none!important;
+    cursor: pointer;
+    transform: scale(1.05);
+}

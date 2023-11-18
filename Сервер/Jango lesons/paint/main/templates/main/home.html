@@ -1,0 +1,12 @@
+{% extends 'main/layout.html' %}
+{% block title %}
+    Моя страница
+{% endblock %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+
+        <button type="submit" class="btn btn-warning"><a href="{% url 'new' %}" class="new">Выложить новый рисунок</a></button>
+
+    </form>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'main/layout.html' %}
+{% block title %}
+    Просмотр
+{% endblock %}
+{% block content %}
+    {% csrf_token %}
+    <button type="submit" class="btn btn-warning"><a href="{{ link }}" class="account">{{ tekst }}</a></button>
+    <h1 style="margin-left: 300px;">Здесь вы можете просмотреть рисунки и оценить те, которые вам понравились</h1>
+    <form class="form-control">
+        <div class="features">
+        {% for i in data %}
+            {% for j in i %}
+                <img src="data:image/png;base64, {{j}}" alt="{{j}}"  onerror='this.style.display="{{j}}"' /><br>
+            {% endfor %}
+            <hr>
+        {% endfor %}
+        </div>
+    </form>
+{% endblock %}

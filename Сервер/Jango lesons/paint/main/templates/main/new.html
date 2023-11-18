@@ -1,0 +1,20 @@
+{% extends 'main/layout.html' %}
+{% block title %}
+    Выложить рисунок
+{% endblock %}
+{% block content %}
+    <form method="post" class="form-control">
+        {% csrf_token %}
+        <div class="features">
+            <h1>Вход</h1>
+            <p>Введите данные, чтобы выложить рисунок.</p>
+            <hr>
+            <label><b>Название рисунка</b></label>
+            {{ form.name }}<br>
+            <span>{{ error }}</span>
+            <hr>
+            <span>Ваш рисунок должен быть нарисован через программу <a href="" class="new" download="">Paint++</a></span>
+            <button type="submit" class="btn btn-warning">Выложить</button>
+        </div>
+    </form>
+{% endblock %}
