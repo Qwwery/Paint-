@@ -8,12 +8,13 @@
     <h1 style="margin-left: 300px;">Здесь вы можете просмотреть рисунки и оценить те, которые вам понравились</h1>
     <form class="form-control">
         <div class="features">
-        {% for i in data %}
-            {% for j in i %}
-                <img src="data:image/png;base64, {{j}}" alt="{{j}}"  onerror='this.style.display="{{j}}"' /><br>
-            {% endfor %}
+            {% for i in check %}
+                <h1>{{ i.name }}</h1>
+                <img src="data:image/png;base64, {{i.data}}" alt=""  /><br>
+                <h2>{{ i.login }}</h2>
+                <p>{{ i.dateandtime }}</p>
             <hr>
-        {% endfor %}
+            {% endfor %}
         </div>
     </form>
 {% endblock %}

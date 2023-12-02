@@ -97,7 +97,7 @@ def viewing(request):
             link = 'main/create'
 
     all_data = []
-
+    check = []
     photo = []
 
     with open('this login and password.txt', 'r') as this_login:
@@ -109,11 +109,16 @@ def viewing(request):
                 if info[i] != '':
                     all_data.append(info[i].split('_'))
                     photo.append(info[i].split('_')[-1])
+                    check.append({'login': info[i].split('_')[0],
+                                  'name': info[i].split('_')[1],
+                                  'dateandtime': info[i].split('_')[2],
+                                  'data': info[i].split('_')[-1]})
     data = {
         'tekst': tekst,
         'link': link,
         'data': all_data,
-        'photo': photo
+        'photo': photo,
+        'check': check
     }
 
     return render(request, 'main/viewing.html', data)
