@@ -140,30 +140,30 @@ def new(request):
     error = ''
     if request.method == 'POST':
         form = ImageForm(request.POST)
-        with open('../this login and password.txt', 'r') as this_login:
+        with open('this login and password.txt', 'r') as this_login:
             this_login = this_login.read()
-            # try:
-            if this_login == '':
-                error = 'Войдите в аккаунт прежде чем выкладывать фото!'
-            else:
-                name = form['name'].value()
-                if len(cur_2.execute(f'select name from base64photo').fetchall()) == 0:
-                    error = 'У вас нет рисунков! Создайте их в приложении, по ссылке ниже.'
-                elif name not in [i[0].split('.')[0] for i in cur_2.execute(f'select Name from Base64Photo where Login = "{this_login.split()[0]}"').fetchall()]:
-                    error = 'Вы не можете выкладывать рисунки, созданные не вами!'
+            try:
+                if this_login == '':
+                    error = 'Войдите в аккаунт прежде чем выкладывать фото!'
                 else:
-                    cur.execute(f'Insert Into main_image(Login, name) VALUES("{this_login.split()[0]}", "{name}")')
-                    cor.commit()
-                    with open('info.txt', 'a') as f:
-                        data = str(cur_2.execute(f'Select Base64Photo From Base64Photo '
-                                        f'Where Login = "{this_login.split()[0]}" AND'
-                                        f' Name = "{name}.png"').fetchall()[-1][-1]).split("'")[1]
-                        f.write(f'{name}_{this_login.split()[0]}_{str(datetime.now()).split(".")[0]}_{data}')
-                        f.write('\n')
-                    return redirect('main')
+                    name = form['name'].value()
+                    if len(cur_2.execute(f'select name from base64photo').fetchall()) == 0:
+                        error = 'У вас нет рисунков! Создайте их в приложении, по ссылке ниже.'
+                    elif name not in [i[0].split('.')[0] for i in cur_2.execute(f'select Name from Base64Photo where Login = "{this_login.split()[0]}"').fetchall()]:
+                        error = 'Вы не можете выкладывать рисунки, созданные не вами!'
+                    else:
+                        cur.execute(f'Insert Into main_image(Login, name) VALUES("{this_login.split()[0]}", "{name}")')
+                        cor.commit()
+                        with open('info.txt', 'a') as f:
+                            data = str(cur_2.execute(f'Select Base64Photo From Base64Photo '
+                                            f'Where Login = "{this_login.split()[0]}" AND'
+                                            f' Name = "{name}.png"').fetchall()[-1][-1]).split("'")[1]
+                            f.write(f'{name}_{this_login.split()[0]}_{str(datetime.now()).split(".")[0]}_{data}')
+                            f.write('\n')
+                        return redirect('main')
 
-            # except Exception:
-            #     error = 'Ошибка! Попробуйте перезагрузить страницу или выложить изображение позже!'
+            except Exception:
+                error = 'Ошибка! Попробуйте перезагрузить страницу или выложить изображение позже!'
 
     data = {
         'error': error,

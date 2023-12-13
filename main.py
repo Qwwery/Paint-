@@ -1,14 +1,15 @@
 import os.path
 import sqlite3
 import sys
+import webbrowser
 from base64 import b64encode, b64decode
 
 from PyQt5.QtCore import Qt, QRect
-from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QColor, QPixmap
+from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QColor
 from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, QColorDialog, QPushButton
 from PyQt5.QtWidgets import QLabel, QInputDialog, QSlider, QUndoCommand, QUndoStack, QFileDialog
 from PyQt5.QtWidgets import QMessageBox
-import webbrowser
+
 
 class LoginsErrorDialog(QMainWindow):
     def __init__(self, textError, cur, cor):
@@ -58,7 +59,7 @@ class LoginsErrorDialog(QMainWindow):
             cor = sqlite3.connect('Сервер/Jango lesons/paint/db.sqlite3')
             cur = cor.cursor()
 
-            cur.execute(f'Insert Into main_profils(login, password) VALUES("{login}", "{password}")')
+            cur.execute(f'Insert Into main_profils(login, password) VALUES("{login[0]}", "{password[0]}")')
             cor.commit()
 
             os.chdir('База данных/Фото/')
@@ -280,12 +281,13 @@ class Window(QMainWindow):
                     country = QMessageBox.question(self, 'Внимание!',
                                                    'Вы уже использовали данное имя для рисунка.')
                 elif isNameLong:
-                    self.image.save('База данных/Фото/Архив/' + login + name + '.png')
-                    with open('База данных/Фото/Архив/' + login + name + '.png', 'rb') as image:
+                    self.image.save('База данных/фото/Архив/' + login + name + '.png')
+                    with open('База данных/фото/Архив/' + login + name + '.png', 'rb') as image:
                         binary = b64encode(image.read())
-                        self.cur.execute(f'Insert Into Base64Photo(Login, Base64Photo, Name, Reactions) Values("{login}", "{binary}", "{name}.png", 0)')
+                        self.cur.execute(
+                            f'Insert Into Base64Photo(Login, Base64Photo, Name, Reactions) Values("{login}", "{binary}", "{name}.png", 0)')
                         self.cor.commit()
-                        self.image.save('База данных/Фото/' + login + '/' + name + '.png')
+                        self.image.save('База данных/фото/' + login + '/' + name + '.png')
             elif isPasswordLong:
                 country = QMessageBox.question(self, 'Внимание!',
                                                'Вы ввели не верный пароль.')
@@ -327,7 +329,6 @@ class Window(QMainWindow):
             country = QMessageBox.question(self, 'Внимание!',
                                            'Вы ввели не верный логин.')
 
-
     def save(self):
         try:
             login, isLong = QInputDialog.getText(self, 'Ввойдите в аккаунт.', 'Логин:')
@@ -350,7 +351,6 @@ class Window(QMainWindow):
         except AttributeError:
             country = QMessageBox.question(self, 'Внимание!',
                                            'Вы не можете пересохранить новый рисунок.')
-
 
         # self.cur.execute('Update Base64Photo From B')
 
