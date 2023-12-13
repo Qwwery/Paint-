@@ -5,8 +5,9 @@
 {% block content %}
     <form method="post">
         {% csrf_token %}
-
+        <br>
         <button type="submit" class="btn btn-warning"><a href="{% url 'new' %}" class="new">Выложить новый рисунок</a></button>
+        <a class="buttons" href="http://127.0.0.1:8000/">Выйти</a>
 
     </form>
 {% endblock %}

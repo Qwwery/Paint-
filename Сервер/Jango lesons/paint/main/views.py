@@ -61,6 +61,9 @@ def enter(request):
     cor = sqlite3.connect('db.sqlite3')
     cur = cor.cursor()
     error = ''
+
+    open('this login and password.txt', 'w').close()
+
     if request.method == 'POST':
         form = ProfilsForm(request.POST)
         login = str(form['login'].value())
@@ -102,7 +105,6 @@ def viewing(request):
 
     with open('this login and password.txt', 'r') as this_login:
         this_login = this_login.read()
-        login = this_login.split()[0]
         with open('info.txt', 'r') as f:
             info = f.read().split('\n')
             for i in range(len(info)):
@@ -138,7 +140,7 @@ def new(request):
     error = ''
     if request.method == 'POST':
         form = ImageForm(request.POST)
-        with open('this login and password.txt', 'r') as this_login:
+        with open('../this login and password.txt', 'r') as this_login:
             this_login = this_login.read()
             # try:
             if this_login == '':

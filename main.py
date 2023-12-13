@@ -8,7 +8,7 @@ from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QColor, QPixmap
 from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, QColorDialog, QPushButton
 from PyQt5.QtWidgets import QLabel, QInputDialog, QSlider, QUndoCommand, QUndoStack, QFileDialog
 from PyQt5.QtWidgets import QMessageBox
-
+import webbrowser
 
 class LoginsErrorDialog(QMainWindow):
     def __init__(self, textError, cur, cor):
@@ -106,6 +106,10 @@ class Window(QMainWindow):
         fileMenu = mainMenu.addMenu('File')
 
         Sayt = mainMenu.addMenu('Сайт')
+
+        saytAsAction = QAction('Посетить сайт', self)
+        Sayt.addAction(saytAsAction)
+        saytAsAction.triggered.connect(lambda: webbrowser.open('http://127.0.0.1:8000/main'))
 
         self.image = QImage(self.size(), QImage.Format_RGB32)
         self.image.fill(Qt.white)
