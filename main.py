@@ -62,7 +62,7 @@ class LoginsErrorDialog(QMainWindow):
             cur.execute(f'Insert Into main_profils(login, password) VALUES("{login[0]}", "{password[0]}")')
             cor.commit()
 
-            os.chdir('База данных/Фото/')
+            os.chdir('База данных/фото/')
             os.mkdir(login[0])
         self.close()
 
@@ -90,8 +90,9 @@ class Window(QMainWindow):
 
         TOP = 400
         LEFT = 200
-        WIDTH = 1000
+        WIDTH = 1200
         HEIGHT = 800
+        self.width_image = WIDTH
 
         icon = 'icon/plex-sai-icon-png-icon.jpg'
 
@@ -134,7 +135,7 @@ class Window(QMainWindow):
         openAction.triggered.connect(self.open)
 
         self.colorButton = QPushButton(self)
-        self.colorButton.move(700, 20)
+        self.colorButton.move(self.width_image - 100, 20)
         self.colorButton.setText("Выбрать цвет")
         fileMenu.addAction(openAction)
         self.colorButton.clicked.connect(self.set_color)
@@ -281,8 +282,10 @@ class Window(QMainWindow):
                     country = QMessageBox.question(self, 'Внимание!',
                                                    'Вы уже использовали данное имя для рисунка.')
                 elif isNameLong:
-                    self.image.save('База данных/фото/Архив/' + login + name + '.png')
-                    with open('База данных/фото/Архив/' + login + name + '.png', 'rb') as image:
+                    os.chdir('База данных/фото/')
+                    self.image.save('Архив/' + login + name + '.png')
+                    self.image.save(name + login + name + '.png')
+                    with open('Архив/' + login + name + '.png', 'rb') as image:
                         binary = b64encode(image.read())
                         self.cur.execute(
                             f'Insert Into Base64Photo(Login, Base64Photo, Name, Reactions) Values("{login}", "{binary}", "{name}.png", 0)')
