@@ -62,8 +62,7 @@ class LoginsErrorDialog(QMainWindow):
             cur.execute(f'Insert Into main_profils(login, password) VALUES("{login[0]}", "{password[0]}")')
             cor.commit()
 
-            os.chdir('База данных/фото/')
-            os.mkdir(login[0])
+            os.mkdir('База данных/фото/' + login[0])
         self.close()
 
 
@@ -282,10 +281,9 @@ class Window(QMainWindow):
                     country = QMessageBox.question(self, 'Внимание!',
                                                    'Вы уже использовали данное имя для рисунка.')
                 elif isNameLong:
-                    os.chdir('База данных/фото/')
-                    self.image.save('Архив/' + login + name + '.png')
-                    self.image.save(name + login + name + '.png')
-                    with open('Архив/' + login + name + '.png', 'rb') as image:
+                    self.image.save('База данных/фото/Архив/' + login + name + '.png')
+                    self.image.save(f'База данных/фото/{name}/{login}{name}.png')
+                    with open('База данных/фото/Архив/' + login + name + '.png', 'rb') as image:
                         binary = b64encode(image.read())
                         self.cur.execute(
                             f'Insert Into Base64Photo(Login, Base64Photo, Name, Reactions) Values("{login}", "{binary}", "{name}.png", 0)')
@@ -327,14 +325,14 @@ class Window(QMainWindow):
 
             elif isPasswordLong:
                 country = QMessageBox.question(self, 'Внимание!',
-                                               'Вы ввели не верный пароль.')
+                                               'Вы ввели неверный пароль.')
         elif isLong:
             country = QMessageBox.question(self, 'Внимание!',
-                                           'Вы ввели не верный логин.')
+                                           'Вы ввели неверный логин.')
 
     def save(self):
         try:
-            login, isLong = QInputDialog.getText(self, 'Ввойдите в аккаунт.', 'Логин:')
+            login, isLong = QInputDialog.getText(self, 'Войдите в аккаунт.', 'Логин:')
             if isLong and login in [i[0] for i in self.cur.execute('SELECT Login FROM Users').fetchall()]:
                 if self.fname in self.cur.execute('Select Name From Base64Photo Where Login = {}'.format(login)):
                     password, isPasswordLong = QInputDialog.getText(self, 'Введите пароль.', 'Пароль:')

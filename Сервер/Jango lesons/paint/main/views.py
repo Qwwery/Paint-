@@ -71,7 +71,7 @@ def enter(request):
         if login not in [i[0] for i in cur.execute('select login from main_profils').fetchall()]:
             error = 'Неверный логин!'
         elif form.is_valid():
-            if password != [i[0] for i in cur.execute('select password from main_profils').fetchall()][0]:
+            if password != [i[0] for i in cur.execute(f'select password from main_profils Where login = "{login}"').fetchall()][0]:
                 error = 'Неверный пароль!'
             else:
                 with open('this login and password.txt', 'w') as this_login:

@@ -27,7 +27,7 @@ class EnterProfilForm(ModelForm):
         widgets = {
             'login': TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Введите пароль'
+                'placeholder': 'Введите логин'
             }),
             'password': TextInput(attrs={
                 'class': 'form-control',
